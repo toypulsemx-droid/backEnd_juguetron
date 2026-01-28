@@ -1,19 +1,45 @@
-const express = require('express')
-const cors = require('cors')
+const express = require('express');
+const cors = require('cors');
+
 const cloudRoutes = require('./Routes/routesCloud');
+const orderRooute = require('./Routes/routesOrders');
+const clipPagoRoutes = require('./Routes/routesClip');
 
+const app = express();
 
-const clipPagoRoutes= require('./Routes/routesClip')
+const whitelist = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://jade-jelly-bba4f6.netlify.app',
+  'https://toy-pulsemx.store'
+];
 
-const app = express()
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
 
+    if (process.env.NODE_ENV === "development") {
+      return callback(null, true);
+    }
 
-app.use(cors())
-app.use(express.json())
+    if (whitelist.includes(origin)) {
+      return callback(null, true);
+    }
 
-app.use('/api', clipPagoRoutes)
+    return callback(new Error('CORS no permitido por el servidor'));
+  },
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
+// ✅ FIX para Express 5+
+app.options(/.*/, cors());
+
+app.use(express.json());
+
+app.use('/api', clipPagoRoutes);
 app.use('/api', cloudRoutes);
+app.use('/api', orderRooute);
 
-
-
-module.exports = app
+module.exports = app;

@@ -1,11 +1,11 @@
 require('dotenv').config()
 const app = require('./app')
-// const connectDB = require('./Config/ConnectDB')
+const connectDB = require('./Config/connectDB')
 
 const PORT = process.env.PORT || 5000
 
 // Conectar a MongoDB
-// connectDB()
+connectDB()
 
 // Levantar servidor
 app.listen(PORT, () => {
