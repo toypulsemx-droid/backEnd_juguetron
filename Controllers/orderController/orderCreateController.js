@@ -1,4 +1,5 @@
 const Order = require('../../models/orderModel')
+const sendOrderNotification = require('../emailController/sendOrderNotification');
 
 const crearOrden = async (req, res) => {
   try {
@@ -7,7 +8,8 @@ const crearOrden = async (req, res) => {
       envio,
       factura,
       pago,
-      total
+      total,
+      cantidad
     } = req.body
 
     // Validaciones mínimas (backend SIEMPRE valida)
@@ -30,10 +32,12 @@ const crearOrden = async (req, res) => {
       envio,
       factura,
       pago,
-      total
+      total,
+      cantidad
     })
 
     const ordenGuardada = await nuevaOrden.save()
+    await sendOrderNotification(ordenGuardada);
 
     res.status(201).json({
       ok: true,

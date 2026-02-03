@@ -8,8 +8,9 @@ const pagarConClip = async (req, res) => {
       description,
       email,
       phone,
-      simulate3DS // ⚡ opcional para sandbox
+      
     } = req.body;
+
 
     if (!cardToken || !amount) {
       return res.status(400).json({
@@ -18,8 +19,9 @@ const pagarConClip = async (req, res) => {
       });
     }
 
+  //  const amountCentavos = Math.round(Number(amount) * 100);
     const bodyData = {
-      amount: Number(amount),
+      amount: Number(amount) || 1,
       currency: 'MXN',
       description: description || 'Pago',
       payment_method: {
@@ -31,18 +33,19 @@ const pagarConClip = async (req, res) => {
       }
     };
 
-    if (simulate3DS) {
-      bodyData.simulate_3ds = true; // ⚡ fuerza 3DS en sandbox
-    }
+   
 
-    const response = await fetch(process.env.CLIP_URI, {
+    const response = await fetch('https://api.payclip.com/payments', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.KEY_CLIP}`,
+        'Authorization': `Bearer ec4e3d33-820f-4922-8037-cf91204b6b63`,        
         'Content-Type': 'application/json'
       },
+      
       body: JSON.stringify(bodyData)
     });
+
+    console.log('body', bodyData)
 
     const data = await response.json();
 

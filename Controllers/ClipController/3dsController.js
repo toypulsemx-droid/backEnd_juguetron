@@ -11,12 +11,12 @@ const consultarPago3DS = async (req, res) => {
     const CLIP_API_KEY = process.env.KEY_CLIP; // tu API Key desde .env
 
     // ✅ Puedes agregar un query param simulate3DS para pruebas, opcional
-    const url = `${process.env.CLIP_URI}/${paymentId}?simulate3DS=true`;
+    const url = `${process.env.CLIP_URI}/${paymentId}`;
 
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${CLIP_API_KEY}`,
+        'Authorization': `Bearer ec4e3d33-820f-4922-8037-cf91204b6b63`,
         'Content-Type': 'application/json'
       }
     });

@@ -63,8 +63,15 @@ const orderSchema = new mongoose.Schema(
     total: {
       type: Number,
       required: true
+    },
+
+    cantidad: {
+      type: Number,
+      required: true
     }
   },
+
+  
   {
     timestamps: true
   }
