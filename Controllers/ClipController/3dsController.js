@@ -16,7 +16,7 @@ const consultarPago3DS = async (req, res) => {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ec4e3d33-820f-4922-8037-cf91204b6b63`,
+        'Authorization': `Bearer `,
         'Content-Type': 'application/json'
       }
     });

@@ -38,7 +38,7 @@ const pagarConClip = async (req, res) => {
     const response = await fetch('https://api.payclip.com/payments', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ec4e3d33-820f-4922-8037-cf91204b6b63`,        
+        'Authorization': `Bearer `,        
         'Content-Type': 'application/json'
       },
       
